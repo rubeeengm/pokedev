@@ -33,6 +33,21 @@ fun main(args: Array<String>) {
         for ((index, a) in pokemon.listaAtaques.withIndex()) {
             println("$index: ${a.nombre}")
         }
+
+        val ataqueSeleccionado = scanner.nextInt()
+
+        if(procesarAtaque(pokemon, pokemonSalvaje, ataqueSeleccionado)){
+            break
+        }
+
+        val ataqueAleatorio: Int = 1 + random.nextInt(pokemonSalvaje.listaAtaques.size)
+
+        if(procesarAtaque(pokemonSalvaje, pokemon, ataqueAleatorio)) {
+            break
+        } else {
+            println("Los dos pokemones siguen en pie!")
+            println("..continuamos!")
+        }
     } while (pokemon.hp > 0 && pokemonSalvaje.hp > 0)
 }
 
@@ -48,3 +63,24 @@ fun generarPokemon(opcion: Int): Pokemon = when(opcion) {
 fun mostrarDatos(pokemon: Pokemon) {
     println("Has elegido a ${pokemon.nombre} \n HP:${pokemon.hp} \n ATAQUE:${pokemon.ataque} \n DEFENSA:${pokemon.defensa}\n")
 }
+
+fun procesarAtaque(pokemonAtacante: Pokemon, pokemonDefensor: Pokemon, ataqueSeleccionado: Int): Boolean {
+    val ataque = pokemonAtacante.obtenerAtaque(ataqueSeleccionado)
+    println("${pokemonAtacante.nombre} ha usado ${ataque.nombre}")
+
+    val valorDanho = calcularDanho(pokemonAtacante.ataque, pokemonAtacante.defensa, ataque)
+    println("${pokemonDefensor.nombre} ha recibido $valorDanho puntos de daño!")
+    pokemonDefensor.hp -= valorDanho
+
+    if (pokemonDefensor.hp <= 0) {
+        println("${pokemonDefensor.nombre} se agotó")
+        println("${pokemonAtacante.nombre} ganó la batalla")
+
+        return true
+    }
+
+    return false
+}
+
+fun calcularDanho(valorAtaque: Int, valorDefensa: Int, ataque: Ataque): Int =
+    ((((2 * 1 + 10.0) / 250) * (valorAtaque / valorDefensa) * ataque.poder + 2) * 1.5).toInt()
