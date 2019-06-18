@@ -24,6 +24,16 @@ fun main(args: Array<String>) {
     val pokemonSalvaje: Pokemon = generarPokemon(numeroAlAzar)
 
     println("Un ${pokemonSalvaje.nombre} salvaje ha aparecido! \n")
+
+    do {
+        println("${pokemon.nombre} HP:${pokemon.hp} | ${pokemonSalvaje.nombre} HP:${pokemonSalvaje.hp}")
+
+        println("Elige un ataque: ")
+
+        for ((index, a) in pokemon.listaAtaques.withIndex()) {
+            println("$index: ${a.nombre}")
+        }
+    } while (pokemon.hp > 0 && pokemonSalvaje.hp > 0)
 }
 
 fun generarPokemon(opcion: Int): Pokemon = when(opcion) {
