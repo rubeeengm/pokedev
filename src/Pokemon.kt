@@ -1,6 +1,7 @@
 class Pokemon(
     val nombre: String,
     var hp: Int,
+    val ataque: Int,
     val defensa: Int,
     val listaAtaques: Array<Ataque>
 ) {
