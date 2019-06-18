@@ -17,6 +17,13 @@ fun main(args: Array<String>) {
     val pokemon : Pokemon = generarPokemon(opcion)
 
     mostrarDatos(pokemon)
+
+    val random = Random()
+    val numeroAlAzar = 1 + random.nextInt(4)
+
+    val pokemonSalvaje: Pokemon = generarPokemon(numeroAlAzar)
+
+    println("Un ${pokemonSalvaje.nombre} salvaje ha aparecido! \n")
 }
 
 fun generarPokemon(opcion: Int): Pokemon = when(opcion) {
